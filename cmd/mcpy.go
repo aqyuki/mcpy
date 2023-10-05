@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 
+	"github.com/aqyuki/mcp/file"
 	"github.com/spf13/cobra"
 )
 
@@ -16,6 +17,6 @@ var rootCmd = cobra.Command{
 		return nil
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return nil
+		return file.CopyOption(args[0], args[1])
 	},
 }
