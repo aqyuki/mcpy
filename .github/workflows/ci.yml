@@ -1,0 +1,43 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+    paths:
+      - "*.go"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build check
+    runs-on: ubuntu-22.04
+    steps:
+      - name: check out
+        uses: actions/checkout@v4
+      - name: set up go
+        uses: actions/setup-go@v4
+        with:
+          cache-dependency-path: go.sum
+          go-version-file: go.mod
+          check-latest: true
+      - name: build check
+        run: |
+          go build ./main.go
+  test:
+    name: Test check
+    runs-on: ubuntu-22.04
+    steps:
+      - name: check out
+        uses: actions/checkout@v4
+      - name: set up go
+        uses: actions/setup-go@v4
+        with:
+          cache-dependency-path: go.sum
+          go-version-file: go.mod
+          check-latest: true
+      - name: run test
+        run: |
+          go test ./...
